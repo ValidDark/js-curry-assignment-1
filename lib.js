@@ -33,20 +33,18 @@ const calculateTotals =
 
                 newCartArray.push(
 
-                        c.items
-                        .reduce((sum, nextItem) => {
+                    c.items
+                    .reduce((sum, nextItem) => {
 
-                            let rObj = {
-                                customer: c.customer,
-                                total:
-                                    c.items
-                                      .reduce((result, item) => result +
+                        return {
+                            customer: c.customer,
+                            total: c.items
+                                .reduce((result, item) => result +
                                     listings
-                                      .map(l => listedPrice(l)) // array of functions that take a name and return price
-                                      .reduce((price, f) => price + f(item), 0), 0)
-                            }
-                            return rObj
-                        }, {}))
+                                    .map(listedPrice) // map listings array to an array of functions
+                                    .reduce((price, priceOf) => price + priceOf(item), 0), 0)
+                        }
+                    }, {}))
             })
         return newCartArray
     }
